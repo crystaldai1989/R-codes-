@@ -1,0 +1,30 @@
+library('tidyverse')
+
+bars_df <- read_csv("flavors_of_cacao.csv")--------------读取文件
+glimpse(bars_df)--------------------看一下数据清空
+
+bars_df %>% rename(Company = Company...Maker.if.known.)--------更改列名
+
+library("dplyr")
+trimmed_flavors_df <- bars_df %>% select(Rating, Cocoa.Percent,Bean.Type)--------选择想要的列的数据
+
+trimmed_flavors_df %>% summarize(mean(Rating))---------------------计算一下某一些数据
+
+best_trimmed_flavors_df <- trimmed_flavors_df %>% filter(Cocoa.Percent>="75%", Rating >= 3.9)----选择好巧克力
+
+ggplot(data = best_trimmed_flavors_df) + geom_bar(mapping=aes(x=Rating))-----画一个柱状图
+
+ggplot(data = best_trimmed_flavors_df) +
+	geom_bar(mapping = aes(x = Company.Location, fill=Rating))-
+
+ggplot(data = best_trimmed_flavors_df) +
+geom_bar(mapping = aes(x = Cocoa.Percent)) +
+facet_wrap(~Cocoa.Percent)-------------生成多一个分图
+
+ggplot(data = trimmed_flavors_df) +
+geom_point(mapping = aes(x = Cocoa.Percent, y = Rating)) +
+labs(title = “Suggested Chocolate”)--------------加上标题
+
+ggplot(data = trimmed_flavors_df) +
+geom_point(mapping = aes(x = Cocoa.Percent, y = Rating)) +
+ggsave(“chocolate.pdf”)---------------------------生成pdf 版本
