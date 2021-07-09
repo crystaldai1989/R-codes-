@@ -1,0 +1,9 @@
+#安装
+install.packages("palmerpenguins")
+#更新
+update.packages(“tidyverse”)
+#加载
+library("palmerpenguins")
+
+#查看描述
+summary()
